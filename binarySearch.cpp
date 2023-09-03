@@ -33,7 +33,7 @@ int main() {
 
     int ans = binarySearch(arr,key,n,low,high);
 
-    cout<<ans<<endl;
+    cout<<"Key at index :"<<ans<<endl;
 
     return 0;
 }
