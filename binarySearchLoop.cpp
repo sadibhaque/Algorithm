@@ -2,11 +2,6 @@
 
 using namespace std;
 
-void input(){
-    freopen("D:\\WorkSpace\\VsCode\\WorkSpace\\Practice\\C++\\input.txt","r",stdin);
-    freopen("D:\\WorkSpace\\VsCode\\WorkSpace\\Practice\\C++\\output.txt","w",stdout);
-}
-
 int binarySearch(int arr[],int key,int n,int low,int high){
     while(low < high){
         int mid = (high+low)/2;
@@ -17,8 +12,6 @@ int binarySearch(int arr[],int key,int n,int low,int high){
 }
 
 int main() {
-    input();
-
     int key= 330;
     int arr[] = {1,22,330,444,550,634,799};
     
