@@ -21,19 +21,17 @@ int binarySearch(int arr[],int key,int n,int low,int high){
 
 int main() {
 
-    int key;
+    int key= 444;
 
-    cin>>key;
+    int arr[] = {1,22,330,444,550,634,799};
 
-    int arr[] = {1,2,3,4,5,6,7};
+    int n =sizeof(arr)/sizeof(arr[0]);
 
-    int n = 7;
-
-    int low = arr[0], high = arr[n-1];
+    int low = 0, high = n-1;
 
     int ans = binarySearch(arr,key,n,low,high);
 
-    cout<<"Key at index :"<<ans<<endl;
+    cout<<"Key at index : "<<ans<<endl;
 
     return 0;
 }
