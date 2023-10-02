@@ -4,39 +4,33 @@ using namespace std;
 #define ll long long int
 #define llf double
 
-int main()
-{
-    ll w[7] = {1,3,5,4,1,3,2};
-    ll p[7] = {5,10,15,7,8,9,4};
-    ll cap = 15;
+int main(){
+	ll cap = 10;
+	ll w[] = {2, 5, 7, 3, 1};
+	ll p[] = {10, 20, 30, 5, 2};
+    ll x = sizeof(w)/sizeof(w[0]);
 
-    llf pw[7];
-
-
-    for (int i = 0; i < 7; i++){
-        pw[i] = (double)p[i] / w[i];
+    llf ratio[x];
+    for (int i = 0; i < x; i++){
+        ratio[i] = (llf)p[i] / w[i];
     }
 
-    for (int i = 0; i < 7-1; i++){
-        for (int j = i+1; j < 7; j++){
-            if(pw[i]<pw[j]){
-                swap(pw[i],pw[j]);
-                swap(w[i],w[j]);
-                swap(p[i],p[j]);
-            }
+	for (int i = 0; i < x-1; i++){
+		if(ratio[i+1] > ratio[i]){
+            swap(w[i],w[i+1]);
+            swap(p[i],p[i+1]);
         }
-    }
+	}
 
-    llf profit = 0.0;
-
-    for (int i = 0; i < 7; i++){
-        if(cap>0){
-            int rem = min(cap,w[i]);
-            profit += (rem * pw[i]);
-            cap -= rem;
+    int temp = 0;
+    llf total_profit = 0;
+    for (int i = 0; i < x; i++){
+        if(temp + w[i] <= cap){
+            total_profit += p[i];
+            temp += w[i];
         }
+        else total_profit += (ratio[i]*(cap-temp));
     }
 
-    cout<<profit<<endl;
-
+    printf("%.3lf",total_profit);
 }

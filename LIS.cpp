@@ -5,9 +5,9 @@ using namespace std;
 
 int main() 
 {
-    ll arr[] = { 1, 9, 5, 4, 3, 2, 1, 0, 8, 9, 10, 10};
-    ll n = 12;
-    ll lis[n];
+    int arr[] = { 1, 9, 5, 4, 3, 2, 1, 0, 8, 9, 10, 10};
+    int n = 12;
+    int lis[n];
 
     for (int i = 0; i < n; i++){
         lis[i] = 1;
