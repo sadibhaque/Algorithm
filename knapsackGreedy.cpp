@@ -2,35 +2,47 @@
 using namespace std;
 
 #define ll long long int
-#define llf double
 
-int main(){
-	ll cap = 10;
-	ll w[] = {2, 5, 7, 3, 1};
-	ll p[] = {10, 20, 30, 5, 2};
-    ll x = sizeof(w)/sizeof(w[0]);
+double greedyKnapsack(ll w[], ll p[], ll c, ll n){
+    double ratio[n];
 
-    llf ratio[x];
-    for (int i = 0; i < x; i++){
-        ratio[i] = (llf)p[i] / w[i];
+    for (int i = 0; i < n; i++) ratio[i] = (double) p[i]/w[i];
+
+    for (int i = 0; i < n-1; i++){
+        for (int j = 0; j < n-1; j++){
+            if(ratio[j] < ratio[j+1]){
+                swap(ratio[j],ratio[j+1]);
+                swap(w[j],w[j+1]);
+                swap(p[j],p[j+1]);
+            }
+        }
     }
 
-	for (int i = 0; i < x-1; i++){
-		if(ratio[i+1] > ratio[i]){
-            swap(w[i],w[i+1]);
-            swap(p[i],p[i+1]);
-        }
-	}
 
     int temp = 0;
-    llf total_profit = 0;
-    for (int i = 0; i < x; i++){
-        if(temp + w[i] <= cap){
-            total_profit += p[i];
+    double ans = 0.0;
+    for (int i = 0; i < n; i++){
+        if((temp + w[i]) <= c){
+            ans += p[i];
             temp += w[i];
+        }else{
+            ans += ratio[i] * (c-temp);
         }
-        else total_profit += (ratio[i]*(cap-temp));
     }
 
-    printf("%.3lf",total_profit);
+    return ans;
+}
+
+
+int main()
+{
+
+    ll w[] = {3, 3, 2, 5, 1};
+    ll p[] = {10, 15, 10, 12, 8};
+    ll c = 10;
+    ll n = sizeof(p) / sizeof(p[0]);
+
+    cout << greedyKnapsack(w, p, c, n) << endl;
+
+    return 0;
 }
