@@ -27,7 +27,6 @@ int main()
     ll c = 10;
     ll n = sizeof(p) / sizeof(p[0]);
 
-    cout << greedyKnapsack(w, p, c, n) << endl;
     cout << dpKnapsack(w, p, c, n) << endl;
 
     return 0;
