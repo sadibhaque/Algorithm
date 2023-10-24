@@ -2,47 +2,53 @@
 using namespace std;
 
 #define ll long long int
+#define llf float
 
-double greedyKnapsack(ll w[], ll p[], ll c, ll n){
-    double ratio[n];
 
-    for (int i = 0; i < n; i++) ratio[i] = (double) p[i]/w[i];
+llf knapsack(pair<vector<llf>,vector<llf>> wp, llf cap, int n){
 
-    for (int i = 0; i < n-1; i++){
-        for (int j = 0; j < n-1; j++){
-            if(ratio[j] < ratio[j+1]){
-                swap(ratio[j],ratio[j+1]);
-                swap(w[j],w[j+1]);
-                swap(p[j],p[j+1]);
-            }
-        }
+    pair<llf,int> ratio_i[n];
+
+    for (int i = 0; i < n; i++) {
+        ratio_i[i].first = wp.second[i] / wp.first[i];
+        ratio_i[i].second = i;
     }
 
+    sort(ratio_i , ratio_i + n, greater<pair<llf,ll>>());
 
-    int temp = 0;
-    double ans = 0.0;
-    for (int i = 0; i < n; i++){
-        if((temp + w[i]) <= c){
-            ans += p[i];
-            temp += w[i];
-        }else{
-            ans += ratio[i] * (c-temp);
+    llf cw = 0.0;
+    llf ans = 0.0;
+    for (int i = 0; i < n; i++) {
+        ll itemIndex = ratio_i[i].second;
+        if ((cw + wp.first[itemIndex]) <= cap) {
+            ans += wp.second[itemIndex];
+            cw += wp.first[itemIndex];
+        } else {
+            ans += ratio_i[i].first * (cap - cw);
+            break;
         }
     }
 
     return ans;
 }
 
+void solve() {
 
-int main()
-{
+    ll cap = 20;
 
-    ll w[] = {3, 3, 2, 5, 1};
-    ll p[] = {10, 15, 10, 12, 8};
-    ll c = 10;
-    ll n = sizeof(p) / sizeof(p[0]);
+    pair<vector<llf>,vector<llf>> wp;// pair for weight and profit
 
-    cout << greedyKnapsack(w, p, c, n) << endl;
+    wp.first = {5,6,7,5}; //weight
+    wp.second = {15, 10, 9, 20}; //profit
+
+    ll n = wp.first.size();
+
+    printf("%0.10lf\n",knapsack(wp,cap,n));
+}
+
+int main() {
+
+    solve();
 
     return 0;
 }
