@@ -6,23 +6,19 @@ using namespace std;
 
 const ll SIZE =  1e5+10;
 vector < ll > graph[SIZE];
-bool visited[SIZE] = {false};
+bool visited[SIZE];
 
 
 
-bool isCycle(ll ver, ll parent){
+bool isCycle(ll vertex, ll parent){
 
-    visited[ver] = true;
+    visited[vertex] = true;
 
     bool ans = false;
-    for(auto child : graph[ver]){
-        if(visited[child] && child == parent) continue;
-        if(visited[child]) return true;
-
-        ans |= isCycle(child,parent);
-        
+        for(auto child : graph[vertex]){
+        if (visited[child] && child != parent) return true;
+        if (!visited[child]) ans |= isCycle(child, vertex);
     }
-
     return ans;
 }
 
@@ -34,21 +30,28 @@ void addEdge(ll v1, ll v2){
 }
 
 
-void solve() {
+void solve() { 
 
-    addEdge(1, 0);     
-    addEdge(0, 2);
-    addEdge(2, 1);   
-    addEdge(0, 3);
-    addEdge(3, 4); //cycle exist
+    ll ver,edge;
+    cin>>ver>>edge;
 
-    addEdge(0, 1);    
-    addEdge(1, 2); // do not exist 
+    for (int i = 0; i < edge; i++){
+        ll v1,v2;
+        cin>>v1>>v2;
 
-    ll parent = 1;
+        addEdge(v1,v2);
+    }
 
-    if(isCycle(parent,parent)) cout<<"There is a cycle !"<<endl;
-    else cout<<"No cycle"<<endl;
+    bool ans = false;
+    for (int i = 1; i <= ver; i++){ 
+        if(!visited[i] && isCycle(i,-1)){
+            ans = true;
+            break;
+        }
+    }
+
+    if(ans) cout<<"Yes\n";
+    else cout<<"No\n";
 
 }
 
@@ -59,17 +62,3 @@ int main() {
     return 0;
 }
 
-
-//input
-
-// 8 5
-// 1 2
-// 2 3
-// 2 4 
-// 3 5
-// 6 7
-
-//output
-
-
-//There is a cycle !
