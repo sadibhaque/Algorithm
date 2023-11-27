@@ -2,41 +2,31 @@
 using namespace std;
 
 #define ll long long int
-#define llf double
-#define xtr string
 
-ll INF = 1e9+10;
-ll MAX = INT_MAX;
-ll G_MAX = 1e5+10;
-ll MIN = INT_MIN;
+ll knapsack(vector<ll>& w, vector<ll>& v, ll cap, ll n){
 
-
-ll knapsack(vector <ll> w, vector<ll> v,  ll cap, ll n){
-    
-    vector<vector<ll>> dp (n + 1, vector<ll>(cap + 1, 0));
+    vector<ll> dpc(cap + 1, 0);
+    vector<ll> dpp(cap + 1, 0);
 
     for (int i = 1; i <= n; ++i) {
         for (int j = 0; j <= cap; ++j) {
             if (w[i - 1] > j) {
-                dp[i][j] = dp[i - 1][j];
+                dpc[j] = dpp[j];
             } else {
-                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i - 1]] + v[i - 1]);
+                dpc[j] = max(dpp[j], dpp[j - w[i - 1]] + v[i - 1]);
             }
         }
+        dpp = dpc;
     }
 
-    return dp[n][cap];
+    return dpc[cap];
 }
-
-
-
 
 int main(){
 	
 	ll n,cap;
 	
-	cin>>n;
-	cin>>cap;
+	cin>>n>>cap;
 	
 	vector <ll> w;
 	vector <ll> p;
@@ -50,6 +40,6 @@ int main(){
 	ll ans = knapsack(w,p,cap,n);
 	
 	cout<<ans<<endl;
-	
 	return 0;
 }
+
