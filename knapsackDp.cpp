@@ -2,32 +2,54 @@
 using namespace std;
 
 #define ll long long int
+#define llf double
+#define xtr string
 
-ll dpKnapsack(ll w[], ll p[], ll c, ll n){
-    ll dp[n+1][c+1];
+ll INF = 1e9+10;
+ll MAX = INT_MAX;
+ll G_MAX = 1e5+10;
+ll MIN = INT_MIN;
 
-    for (int i = 0; i <= n; i++)
-    {
-        for (int j = 0; j <= c; j++)
-        {
-            if (i == 0 || j == 0) dp[i][j] = 0;
-            else if (j < w[i - 1]) dp[i][j] = dp[i - 1][j];
-            else dp[i][j] = max(dp[i - 1][j], p[i - 1] + dp[i - 1][j - w[i - 1]]);
+
+ll knapsack(vector <ll> w, vector<ll> v,  ll cap, ll n){
+    
+    vector<vector<ll>> dp (n + 1, vector<ll>(cap + 1, 0));
+
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 0; j <= cap; ++j) {
+            if (w[i - 1] > j) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i - 1]] + v[i - 1]);
+            }
         }
     }
-    return dp[n][c];
+
+    return dp[n][cap];
 }
 
 
-int main()
-{
 
-    ll w[] = {3, 3, 2, 5, 1};
-    ll p[] = {10, 15, 10, 12, 8};
-    ll c = 10;
-    ll n = sizeof(p) / sizeof(p[0]);
 
-    cout << dpKnapsack(w, p, c, n) << endl;
-
-    return 0;
+int main(){
+	
+	ll n,cap;
+	
+	cin>>n;
+	cin>>cap;
+	
+	vector <ll> w;
+	vector <ll> p;
+	
+	w.resize(n);
+	p.resize(n);
+	
+	for(int i = 0; i < n; i++) cin>>w[i];
+	for(int i = 0; i < n; i++) cin>>p[i];
+	
+	ll ans = knapsack(w,p,cap,n);
+	
+	cout<<ans<<endl;
+	
+	return 0;
 }
