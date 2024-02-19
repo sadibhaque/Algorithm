@@ -43,29 +43,47 @@ typedef vector<ps> vps;
 #define reva(x,n) reverse((x),(x)+(n))
 #define all(x) (x).begin(),(x).end()
 
+const int N = 1e3+5;
+int dp[N][N];
+
 int knapsack(int* w, int* v, int t, int n){
     if(n < 0 || t == 0) return 0;
+    if(dp[n][t] != -1) return dp[n][t];
 
     if(w[n] <= t){
-        return max(knapsack(w,v,(t - w[n]),n-1) + v[n], knapsack(w,v,t,n-1));
+        return dp[n][t] = max(knapsack(w,v,(t - w[n]),n-1) + v[n], knapsack(w,v,t,n-1));
     }
-    else return knapsack(w,v,t,n-1);
+    else return dp[n][t] = knapsack(w,v,t,n-1);
 }
 
 void solve(){
-    int n;
-    cin>>n;
+    int n,t;
+    cin>>n>>t;
+
+    for(int i = 0; i <= n; i++){
+        for(int j = 0; j <= t; j++){
+            dp[i][j] = -1;
+        }
+    }
 
     int w[n],v[n];
-    for(int i = 0; i < n; i++) cin>>w[i];
-    for(int i = 0; i < n; i++) cin>>v[i];
-
-    int t;
-    cin>>t;
+    for(int i = 0; i < n; i++){
+        cin>>w[i];
+    }
+    for(int i = 0; i < n; i++){
+        cin>>v[i];
+    }
 
     int ans = knapsack(w,v,t,n-1);
 
     pans;
+
+    for(int i = 0; i <= n; i++){
+        for(int j = 0; j <= t; j++){
+            cout<<dp[i][j]<<" ";
+        }
+        pend;
+    }
 }
 
 int sadib(){
