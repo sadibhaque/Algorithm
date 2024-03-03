@@ -43,36 +43,51 @@ typedef vector<ps> vps;
 #define reva(x,n) reverse((x),(x)+(n))
 #define all(x) (x).begin(),(x).end()
 
+bool dp[100][100];
 
+bool subsetSum(vi arr, int n, int target){
+    for(int i = 1; i <= n; i++){
+        dp[0][i] = false;
+    }
 
-bool subset(int* arr,int sum, int n){
-    bool dp[n+1][sum+1];
+    dp[0][0] = true;
 
-    for(int i = 0; i <= n; i++){
-        for(int j = 0; j <= sum; j++){
-            if(j == 0) dp[i][j] = true;
-            else  if(i == 0) dp[i][j] = false;
-            else if(arr[i-1] <= j){
-                dp[i][j] = dp[i - 1][j - arr[i - 1]] || dp[i - 1][j];
+    for(int i = 1; i <= n; i++){
+        for(int j = 0; j <= target; j++){
+            if(arr[i-1] <= j){
+                dp[i][j] = dp[i-1][j] || dp[i-1][j - arr[i-1]];
             }
-            else dp[i][j] = dp[i-1][j];
+            else{
+                dp[i][j] = dp[i-1][j];
+            }
         }
     }
 
-    return dp[n][sum];
+    for(int i = 0; i <=n; i++){
+        for(int j = 0; j <= target; j++){
+            cout<<dp[i][j]<<" ";
+        }
+        pend;
+    }
+
+    return dp[n][target];
 }
 
 void solve(){
     int n;
     cin>>n;
-    int arr[n];
+
+    vi arr(n);
     for(int i = 0; i < n; i++){
         cin>>arr[i];
     }
-    int sum;
-    cin>>sum;
 
-    if(subset(arr,sum,n)) py;
+    int target;
+    cin>>target;
+
+    bool ans = subsetSum(arr,n,target);
+
+    if(ans) py;
     else pn;
 }
 
