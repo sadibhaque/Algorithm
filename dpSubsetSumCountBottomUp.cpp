@@ -43,20 +43,6 @@ typedef vector<ps> vps;
 #define reva(x,n) reverse((x),(x)+(n))
 #define all(x) (x).begin(),(x).end()
 
-// int generate(vi arr, int n, int target){
-//     if(n == 0){
-//         if(target == 0){
-//             return 1;
-//         }
-//         else return 0;
-//     }
-
-//     if(arr[n-1] <= target){
-//         return generate(arr,n-1,target - arr[n-1]) + generate(arr,n-1,target);
-//     }
-//     else return generate(arr,n-1,target);
-// }
-
 int generate(vi arr, int n, int target){
     int dp[n+1][target+1];
 
