@@ -1,4 +1,5 @@
 /* Each conquered bug is a step towards mastery. */
+
 #include "bits/stdc++.h"
 using namespace std;
 
@@ -43,8 +44,8 @@ typedef vector<ps> vps;
 #define all(x) (x).begin(),(x).end()
 
 bool generate(vector<int> arr, int n, int sum){
-    if(sum == 0 && n == 0) return false;
-    if(sum == 0) return true;
+    if(sum == 0 && n!= 0) return true;
+    if(n == 0 || sum < 0) return false;
     
     if(arr[n-1] <= sum){
         return generate(arr,n-1,sum-arr[n-1]) || generate(arr,n-1,sum);
