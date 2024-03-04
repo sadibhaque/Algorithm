@@ -1,5 +1,4 @@
 /* Each conquered bug is a step towards mastery. */
-
 #include "bits/stdc++.h"
 using namespace std;
 
